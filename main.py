@@ -17,8 +17,8 @@ def check_input(guess):
     return False
 
 def did_you_win(guess, answer, guesses):
-    reds, whites = 0, 0
-    whites_list = []
+    reds = 0
+    remaining_guess = []
     remaining_answer = []
     if guesses == 0:
         print "Sorry, you lost. The answer was: " + answer
@@ -30,13 +30,21 @@ def did_you_win(guess, answer, guesses):
         if digit == answer[key]:
             reds += 1
         else:
-            whites_list.append(digit)
+            remaining_guess.append(digit)
             remaining_answer.append(answer[key])
-    for digit in whites_list:
-        if digit in remaining_answer:
-            whites += 1        
+    whites = is_number_in_answer(remaining_guess, remaining_answer)        
     display_gameboard(reds,whites,guesses)
     return False
+
+def is_number_in_answer(remaining_guess, remaining_answer):
+    whites = 0
+    for digit in remaining_guess:
+        if digit in remaining_answer:
+            whites += 1
+            remaining_answer.remove(digit)
+    return whites
+
+            
 
 def guess_answer():
     guess = raw_input("please give a 4-digit number between: ")
